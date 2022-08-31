@@ -7,10 +7,9 @@ function Currencies({
 }) {
   return (
     <section className={isOpen ? 'currencies currencies--open' : 'currencies'}>
-      <h2 className="currencies__title">Currencies</h2>
-      <input
+        <input
         className="currencies__search"
-        placeholder="Rechercher une devise"
+        placeholder="Look for a currency"
         value={inputSearchValue}
         onChange={onInputSearchChange}
       />

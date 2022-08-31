@@ -36,6 +36,21 @@ class App extends React.Component {
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
   }
 
+  componentDidMount() {
+    console.log('ComponentDidMount : le composant a été rendu pour la premiere fois.');
+    document.title = `Convert euro to ${this.state.selectedCurrency}`;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // avec prevProps et prevState je peux comparer les anciens props / state
+    // et determiner qu'est-ce qui précisément changé
+    if (prevState.selectedCurrency !== this.state.selectedCurrency) {
+      // et du coup je modifie mon titre que lorsque c'est nécessaire
+      console.log('didUpdate : mise a jour du titre de la page');
+      document.title = `Conversion de euros vers ${this.state.selectedCurrency}`;
+    }
+  }
+
    // une méthode appellée au clic sur le bouton
   handleButtonClick() {
     this.setState({
