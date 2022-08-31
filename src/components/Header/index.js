@@ -12,7 +12,7 @@ function Header({ baseAmount, onBaseAmountChange }) {
         type="number"
         min="0"
         max="10000"
-        placeholder="Montant a convertir en euros"
+        placeholder="Amont to convert"
         value={baseAmount}
         onChange={onBaseAmountChange}
       />
