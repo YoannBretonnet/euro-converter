@@ -29,8 +29,8 @@ class App extends React.Component {
       inputSearch: '',
     };
 
-    // j'utilise la méthode bind pour ne pas perdre la valeur de this
-    this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
+  // j'utilise la méthode bind pour ne pas perdre la valeur de this
+    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
     this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
@@ -39,11 +39,11 @@ class App extends React.Component {
    // une méthode appellée au clic sur le bouton
   handleButtonClick() {
     this.setState({
-      isListOpen: !this.state.isListOpen, // l'inverse de isListOpen
+      isListOpen: !this.state.isListOpen,
     });
   }
 
-    // une fonction appellée lors du clic sur une devise
+  // une fonction appellée lors du clic sur une devise
   // la fonction recoit en parametre la nouvelle devise selectionnée
   handleCurrencyClick(newCurrency) {
     this.setState({
