@@ -17,9 +17,10 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-
+  
     // je déclare l'état
     this.state = {
+      isListOpen: true,
       // le montant a convertir
       baseAmount: 1,
       // la devise cible selectionnée
@@ -91,6 +92,7 @@ class App extends React.Component {
         />
         {/* un composant pour activer/désactiver la liste */}
         <Currencies
+          isOpen={this.state.isListOpen}
           list={this.getFilteredCurrencies()}
           inputSearchValue={this.state.inputSearch}
           onCurrencyClick={this.handleCurrencyClick}
