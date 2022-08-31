@@ -9,7 +9,7 @@ function Currencies({
     <section className={isOpen ? 'currencies currencies--open' : 'currencies'}>
         <input
         className="currencies__search"
-        placeholder="Look for a currency"
+        placeholder="... look for a currency here"
         value={inputSearchValue}
         onChange={onInputSearchChange}
       />
