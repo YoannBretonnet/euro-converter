@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import './currencies.scss';
 
 function Currencies({
-list, onCurrencyClick, inputSearchValue, onInputSearchChange,
+  isOpen, list, onCurrencyClick, inputSearchValue, onInputSearchChange,
 }) {
   return (
-    <section className= 'currencies'>
+    <section className={isOpen ? 'currencies currencies--open' : 'currencies'}>
       <h2 className="currencies__title">Currencies</h2>
       <input
         className="currencies__search"
@@ -32,9 +32,10 @@ list, onCurrencyClick, inputSearchValue, onInputSearchChange,
 }
 
 Currencies.propTypes = {
-  list: PropTypes.arrayOf(
+  isOpen: PropTypes.bool.isRequired,
+  list: PropTypes.arrayOf( 
     PropTypes.shape({ 
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired, 
       rate: PropTypes.number.isRequired,
     }).isRequired, 
   ).isRequired, 

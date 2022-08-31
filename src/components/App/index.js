@@ -68,7 +68,20 @@ class App extends React.Component {
       // eslint-disable-next-line max-len
       .filter((currency) => currency.name.toLowerCase().includes(this.state.inputSearch.toLowerCase()));
   }
+
+    // fonction qui va calculer le montant converti
+    makeConversion() {
+        const foundCurrency = currencyData
+        .find((currency) => currency.name === this.state.selectedCurrency);
+
+      const resultFloat = foundCurrency.rate * this.state.baseAmount;
   
+      // je veux que deux décimales après la virgule
+      const resultFixed = Math.round(resultFloat * 100) / 100;
+  
+      return resultFixed;
+    }
+
   render() {
     return (
       <div className="app">
@@ -82,6 +95,10 @@ class App extends React.Component {
           inputSearchValue={this.state.inputSearch}
           onCurrencyClick={this.handleCurrencyClick}
           onInputSearchChange={this.handleSearchInputChange}
+        />
+        <Result
+          result={this.makeConversion()}
+          selectedCurrency={this.state.selectedCurrency}
         />
       </div>
     );
