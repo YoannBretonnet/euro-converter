@@ -30,6 +30,9 @@ class App extends React.Component {
 
     // j'utilise la méthode bind pour ne pas perdre la valeur de this
     this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
+    this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
+    this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
+    this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
   }
 
     // une fonction appellée lors du clic sur une devise
@@ -52,6 +55,20 @@ class App extends React.Component {
     });
   }
 
+  
+  getFilteredCurrencies() {
+    // si inputSearch est vide
+    if (this.state.inputSearch === '') {
+      // je renvoie toutes les devises telle qu'elles
+      return currencyData;
+    }
+    // si inputSearch contient quelque chose
+    // je garde que les devises dont le nom contient le prédicat de recherche
+    return currencyData
+      // eslint-disable-next-line max-len
+      .filter((currency) => currency.name.toLowerCase().includes(this.state.inputSearch.toLowerCase()));
+  }
+  
   render() {
     return (
       <div className="app">
@@ -60,7 +77,12 @@ class App extends React.Component {
           onBaseAmountChange={this.handleBaseAmountChange}
         />
         {/* un composant pour activer/désactiver la liste */}
-
+        <Currencies
+          list={this.getFilteredCurrencies()}
+          inputSearchValue={this.state.inputSearch}
+          onCurrencyClick={this.handleCurrencyClick}
+          onInputSearchChange={this.handleSearchInputChange}
+        />
       </div>
     );
   }
