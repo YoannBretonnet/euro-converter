@@ -36,6 +36,13 @@ class App extends React.Component {
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
   }
 
+   // une méthode appellée au clic sur le bouton
+  handleButtonClick() {
+    this.setState({
+      isListOpen: !this.state.isListOpen, // l'inverse de isListOpen
+    });
+  }
+
     // une fonction appellée lors du clic sur une devise
   // la fonction recoit en parametre la nouvelle devise selectionnée
   handleCurrencyClick(newCurrency) {
@@ -91,6 +98,10 @@ class App extends React.Component {
           onBaseAmountChange={this.handleBaseAmountChange}
         />
         {/* un composant pour activer/désactiver la liste */}
+          <Toggler
+          isOpen={this.state.isListOpen}
+          onToggle={this.handleButtonClick}
+        />
         <Currencies
           isOpen={this.state.isListOpen}
           list={this.getFilteredCurrencies()}
