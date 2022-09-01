@@ -11,7 +11,7 @@ import './app.scss';
 
 // import de mes données statiques
 import currencyData from 'src/data/currencies';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App (props) {
  
@@ -23,16 +23,15 @@ function App (props) {
 
 
   // j'utilise les life cycles pour modifier le title du document
-  // componentDidMount() {
-  //   document.title = `Convert euro to ${this.state.selectedCurrency}`;
-  // }
+  // avec la refacto, j'utilise le hook useEffect
+  useEffect (() => {
+    document.title = `Convert euro to ${selectedCurrency}`;
+  },[]);
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.selectedCurrency !== this.state.selectedCurrency) {
-  //     document.title = `Conversion de euros vers ${this.state.selectedCurrency}`;
-  //   }
-  // }
-
+  useEffect (() => {
+    document.title = `Conversion de euros vers ${selectedCurrency}`;
+  }, [selectedCurrency] );
+  
    // une méthode appellée au clic sur le bouton
   const handleButtonClick = () => {
     setIsListOpen(!isListOpen);
@@ -63,7 +62,7 @@ function App (props) {
     // je garde que les devises dont le nom contient le prédicat de recherche
     return currencyData
       // eslint-disable-next-line max-len
-      .filter((currency) => currency.name.toLowerCase().includes(this.state.inputSearch.toLowerCase()));
+      .filter((currency) => currency.name.toLowerCase().includes(inputSearch.toLowerCase()));
   };
 
     // fonction qui va calculer le montant converti
