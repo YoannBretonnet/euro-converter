@@ -1,6 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prefer-stateless-function */
-import React from 'react';
 // == Import
 import Header from 'src/components/Header';
 import Toggler from 'src/components/Toggler';
@@ -12,72 +11,51 @@ import './app.scss';
 
 // import de mes données statiques
 import currencyData from 'src/data/currencies';
+import { useState } from 'react';
 
-class App extends React.Component {
+function App (props) {
+ 
+    // je refactorise en utilisant le hook useState
+    const [isListOpen, setIsListOpen] = useState(true);
+    const [baseAmount, setBaseAmount] = useState(1);
+    const [selectedCurrency, setSelectedCurrency] = useState("Swiss Franc");
+    const [inputSearch, setInputSearch] = useState('');
 
-  constructor(props) {
-    super(props);
-  
-    // je déclare l'état
-    this.state = {
-      isListOpen: true,
-      // le montant a convertir
-      baseAmount: 1,
-      // la devise cible selectionnée
-      selectedCurrency: 'Swiss Franc',
-      // le champ de recherche de devise
-      inputSearch: '',
-    };
-
-  // j'utilise la méthode bind pour ne pas perdre la valeur de this
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
-    this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
-    this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
-  }
 
   // j'utilise les life cycles pour modifier le title du document
-  componentDidMount() {
-    document.title = `Convert euro to ${this.state.selectedCurrency}`;
-  }
+  // componentDidMount() {
+  //   document.title = `Convert euro to ${this.state.selectedCurrency}`;
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedCurrency !== this.state.selectedCurrency) {
-      document.title = `Conversion de euros vers ${this.state.selectedCurrency}`;
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.selectedCurrency !== this.state.selectedCurrency) {
+  //     document.title = `Conversion de euros vers ${this.state.selectedCurrency}`;
+  //   }
+  // }
 
    // une méthode appellée au clic sur le bouton
-  handleButtonClick() {
-    this.setState({
-      isListOpen: !this.state.isListOpen,
-    });
+  const handleButtonClick = () => {
+    setIsListOpen(!isListOpen);
   }
-
   // une fonction appellée lors du clic sur une devise
   // la fonction recoit en parametre la nouvelle devise selectionnée
-  handleCurrencyClick(newCurrency) {
-    this.setState({
-      selectedCurrency: newCurrency,
-    });
-  }
+  const handleCurrencyClick = (newCurrency) => {
+    setSelectedCurrency(newCurrency);
+    
+  };
 
-  handleBaseAmountChange(event) {
-    this.setState({
-      baseAmount: event.target.valueAsNumber,
-    });
-  }
+  const handleBaseAmountChange = (event) => {
+    setBaseAmount(event.target.valueAsNumber);
+  };
 
-  handleSearchInputChange(event) {
-    this.setState({
-      inputSearch: event.target.value,
-    });
-  }
+  const handleSearchInputChange = (event) => {
+ setInputSearch(event.target.value);
+  };
 
   
-  getFilteredCurrencies() {
+  const getFilteredCurrencies = () => {
     // si inputSearch est vide
-    if (this.state.inputSearch === '') {
+    if (inputSearch === '') {
       // je renvoie toutes les devises telle qu'elles
       return currencyData;
     }
@@ -86,14 +64,14 @@ class App extends React.Component {
     return currencyData
       // eslint-disable-next-line max-len
       .filter((currency) => currency.name.toLowerCase().includes(this.state.inputSearch.toLowerCase()));
-  }
+  };
 
     // fonction qui va calculer le montant converti
-    makeConversion() {
-        const foundCurrency = currencyData
-        .find((currency) => currency.name === this.state.selectedCurrency);
+    const makeConversion = () => {
+      const foundCurrency = currencyData
+        .find((currency) => currency.name === selectedCurrency);
 
-      const resultFloat = foundCurrency.rate * this.state.baseAmount;
+      const resultFloat = foundCurrency.rate * baseAmount;
   
       // je veux que deux décimales après la virgule
       const resultFixed = Math.round(resultFloat * 100) / 100;
@@ -101,32 +79,31 @@ class App extends React.Component {
       return resultFixed;
     }
 
-  render() {
     return (
       <div className="app">
         <Header
-          baseAmount={this.state.baseAmount}
-          onBaseAmountChange={this.handleBaseAmountChange}
+          baseAmount={baseAmount}
+          onBaseAmountChange={handleBaseAmountChange}
         />
         {/* un composant pour activer/désactiver la liste */}
           <Toggler
-          isOpen={this.state.isListOpen}
-          onToggle={this.handleButtonClick}
+          isOpen={isListOpen}
+          onToggle={handleButtonClick}
         />
         <Currencies
-          isOpen={this.state.isListOpen}
-          list={this.getFilteredCurrencies()}
-          inputSearchValue={this.state.inputSearch}
-          onCurrencyClick={this.handleCurrencyClick}
-          onInputSearchChange={this.handleSearchInputChange}
+          isOpen={isListOpen}
+          list={getFilteredCurrencies()}
+          inputSearchValue={inputSearch}
+          onCurrencyClick={handleCurrencyClick}
+          onInputSearchChange={handleSearchInputChange}
         />
         <Result
-          result={this.makeConversion()}
-          selectedCurrency={this.state.selectedCurrency}
+          result={makeConversion()}
+          selectedCurrency={selectedCurrency}
         />
       </div>
     );
-  }
+
 }
 
 // == Export
