@@ -11,6 +11,8 @@ import './app.scss';
 
 // import de mes données statiques
 import currencyData from 'src/data/currencies';
+
+// import des hooks
 import { useState, useEffect } from 'react';
 
 function App (props) {
